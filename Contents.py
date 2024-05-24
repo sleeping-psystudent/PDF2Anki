@@ -6,12 +6,13 @@ import numpy as np
 # https://blog.csdn.net/star1210644725/article/details/136318768
 def extractContents(filepath):
     doc = fitz.open(filepath)
-    page_contents = []
     topics = []
+    re_contents = []
  
     for page_num in range(len(doc)):
         page = doc.load_page(page_num)
         blocks = page.get_text("dict")["blocks"]
+        page_contents = []
 
         # extract font sizes
         page_number = page_num + 1
@@ -41,10 +42,13 @@ def extractContents(filepath):
         # topic filter
         for content in page_contents:
             text = content["text"]
-            # 找出大小大於中位數的字體、過濾掉可能是文字塊、是圖片、是公式的語料
+            # 找出大小大於中位數的字體、過濾掉可能是文字塊、圖片、公式的語料
             if content["size"] > med and not is_body_text(text) and not is_image(text) and not is_formula(text):
                 topics.append(content)
-    return page_contents, topics
+            # 找出大小小於中位數的字體、過濾掉可能是圖片的語料
+            elif content["size"] >= med and not is_image(text):
+                re_contents.append(content)
+    return re_contents, topics
  
 def is_body_text(text):
     return len(text) > 100 or text.endswith(".") or text.endswith("?") or text.endswith("!")
@@ -57,13 +61,19 @@ def is_formula(text):
 
 # gemini再次確認是否為標題
 def reCheck(text, model):
-    input = f"""please ignore the "Title" part, check whether "{text}" is a topic, and answer "yes" or "no" only
+    input = f"""please check whether "{text}" is a topic, and answer "yes" or "no" only
     """
     reply = model.generate_content(
     input,
-    generation_config=genai.types.GenerationConfig(temperature=0)
+    generation_config=genai.types.GenerationConfig(temperature=0),
+    safety_settings=[
+        {"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE",},
+        {"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE",},
+        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE",},
+        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT","threshold": "BLOCK_NONE",},
+        ]
     )
-    if "yes" in reply:
+    if "yes" in reply.text:
         return True
     else:
         return False
@@ -71,10 +81,11 @@ def reCheck(text, model):
 # === Topic Main === #
 
 def Topics(filepath, model):
-    page_contents, topics = extractContents(filepath)
-    for i, element in enumerate(topics):
+    re_topics = []
+    contents, topics = extractContents(filepath)
+    for element in topics:
         if reCheck(element['text'], model):
-            continue
+            re_topics.append(element)
         else:
-            del topics[i]
-    return (page_contents, topics)
+            continue
+    return contents, re_topics
