@@ -1,1 +1,1 @@
-# MD2Anki
+# PDF2Anki
