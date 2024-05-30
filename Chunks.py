@@ -15,16 +15,21 @@ def teacher(text, model):
     
     {text}
     """
-    QA = model.generate_content(
-    input,
-    generation_config=genai.types.GenerationConfig(temperature=0),
-    safety_settings=[
-        {"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE",},
-        {"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE",},
-        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE",},
-        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT","threshold": "BLOCK_NONE",},
-        ]
-    )
+    while True:
+        try:
+            QA = model.generate_content(
+            input,
+            generation_config=genai.types.GenerationConfig(temperature=0),
+            safety_settings=[
+                {"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE",},
+                {"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE",},
+                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE",},
+                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT","threshold": "BLOCK_NONE",},
+                ]
+            )
+            break
+        except Exception:
+            time.sleep(15)
     return QA.text
 
 # === Question Main === #

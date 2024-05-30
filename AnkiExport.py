@@ -49,4 +49,4 @@ def Convert(csv_file, deck_name):
     apkg_file = csv_file.split(".")
     apkg_file = apkg_file[0]+".apkg"
     package.write_to_file(apkg_file)
-    return package
+    return apkg_file
