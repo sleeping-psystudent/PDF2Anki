@@ -45,8 +45,9 @@ def extractContents(filepath):
             # 找出大小大於中位數的字體、過濾掉可能是文字塊、圖片、公式的語料
             if content["size"] > med and not is_body_text(text) and not is_image(text) and not is_formula(text):
                 topics.append(content)
-            # 找出大小小於中位數的字體、過濾掉可能是圖片的語料
-            elif content["size"] >= med and not is_image(text):
+                re_contents.append(content)
+            # 找出大小大於等於於中位數的字體、過濾掉可能是圖片的語料
+            elif content["size"] == med and not is_image(text):
                 re_contents.append(content)
     return re_contents, topics
  
