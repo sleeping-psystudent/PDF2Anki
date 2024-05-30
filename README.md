@@ -28,7 +28,7 @@ conda install --yes --file requirements.txt
 ![pic](screenshot1.png)
 4. After the execution is completed, you can download the `.apkg` file and upload it to your own Anki.
 
-## Acknowledge
+## Warning
 
 Due to token restrictions with gemini-pro, to avoid exceeding the usage limit per minute, the generation speed is adjusted using the `time` module, resulting in longer waiting times.
 
