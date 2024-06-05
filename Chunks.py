@@ -28,8 +28,8 @@ def teacher(text, model):
                 ]
             )
             break
-        except Exception:
-            time.sleep(15)
+        except:
+            time.sleep(5)
     return QA.text
 
 # === Question Main === #
@@ -57,7 +57,7 @@ def Questions(filepath, contents, topics, model):
     # 轉為csv檔
     file_name = filepath.split('.')
     file_name = file_name[0]+'.csv'
-    with open(file_name, 'w', newline="") as f:
+    with open(file_name, 'a', newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Question", "Answer"])
         writer.writerows(re_tests)

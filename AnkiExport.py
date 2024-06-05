@@ -9,14 +9,14 @@ def Convert(csv_file, deck_name):
     model_id = random.randint(1000000000, 9999999999)
     model = genanki.Model(
         model_id,
-        "QA Model",
+        "基本型",
         fields=[
-            {"name": "Question"},
-            {"name": "Answer"},
+            {"name": "正面"},
+            {"name": "背面"},
         ],
         templates=[
             {
-                "name": "Card 1",
+                "name": "卡片 1",
                 "qfmt": "{{Question}}",
                 "afmt": "{{FrontSide}}<br>{{Answer}}",
             },
