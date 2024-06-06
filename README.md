@@ -3,7 +3,7 @@
 Upload a PDF file, use Gemini to extract questions from it and create an .apkg file, then download it for self-testing on how familiar you are with the content of the document.
 
 ## Prerequisites
-- Python 3.10 or higher
+- Python 3.10
 - Obtain a Gemini API from [Google AI Studio](https://ai.google.dev/gemini-api/docs/workspace)
 
 ## Installation
