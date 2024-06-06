@@ -31,12 +31,7 @@ Here is the revised version of your instructions for improved grammar and flow:
 4. Enter the Gemini API key and the name of the deck in the textboxes on the right side, then wait for the questions to be generated.
 5. Once the execution is completed, you can download the `.apkg` file and upload it to your Anki.
 
-## Warning
-
-Due to token restrictions with gemini-pro, to avoid exceeding the usage limit per minute, the generation speed is adjusted using the `time` module, resulting in longer waiting times.
-
 ## Notes
 
-- Intending to add a user question-generation mechanism.
 - Intending to incorporate additional question-generation modes.
 - Adding (aiming to achieve) image interpretation.
