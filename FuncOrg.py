@@ -33,7 +33,7 @@ def pdf2anki(question: None, api: str, pdf: None, apkg_name: str) -> str:
     if count == 0:
         csv_name = geminiQA(pdf_path, model)
         count += 1
-    if question != None:
+    if question != "":
         csv_name = userQA(pdf_path, question, model, api)
     apkg_path = Convert(csv_name, apkg_name)
     return apkg_path
