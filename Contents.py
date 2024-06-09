@@ -1,4 +1,5 @@
 import fitz
+import time
 import google.generativeai as genai
 import numpy as np
 
@@ -64,16 +65,21 @@ def is_formula(text):
 def reCheck(text, model):
     input = f"""please check whether "{text}" is a topic, and answer "yes" or "no" only
     """
-    reply = model.generate_content(
-    input,
-    generation_config=genai.types.GenerationConfig(temperature=0),
-    safety_settings=[
-        {"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE",},
-        {"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE",},
-        {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE",},
-        {"category": "HARM_CATEGORY_DANGEROUS_CONTENT","threshold": "BLOCK_NONE",},
-        ]
-    )
+    while(True):
+        try:
+            reply = model.generate_content(
+            input,
+            generation_config=genai.types.GenerationConfig(temperature=0),
+            safety_settings=[
+                {"category": "HARM_CATEGORY_HARASSMENT","threshold": "BLOCK_NONE",},
+                {"category": "HARM_CATEGORY_HATE_SPEECH","threshold": "BLOCK_NONE",},
+                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold": "BLOCK_NONE",},
+                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT","threshold": "BLOCK_NONE",},
+                ]
+            )
+            break
+        except:
+            time.sleep(5)
     if "yes" in reply.text:
         return True
     else:
