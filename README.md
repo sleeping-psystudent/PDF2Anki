@@ -22,8 +22,6 @@ conda install --yes --file conda_requirements.txt
 
 ## Usage
 
-Here is the revised version of your instructions for improved grammar and flow:
-
 1. Run the script `python AnkiProducer.py`.
 2. Hold down Ctrl and click on the Local URL.
 3. You will see the following screen. Upload the PDF and ask some questions (it is okay to leave the question textbox blank).
