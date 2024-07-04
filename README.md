@@ -1,4 +1,4 @@
-# PDF2Anki
+# PDF2Anki 
 
 Upload a PDF file, use Gemini to extract questions from it and create an .apkg file, then download it for self-testing on how familiar you are with the content of the document.
 
